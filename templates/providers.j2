@@ -1,0 +1,11 @@
+{% for i in instances %}
+provider "aws"{
+  alias  = {{ i.name }}
+  region = {{ i.region }}
+
+  assume_role {
+    role_arn = "arn:aws:iam::{{ i.account_id }}:role/{{ role_name }}"
+  }
+}
+
+{% endfor %}

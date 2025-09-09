@@ -1,0 +1,37 @@
+
+---
+- name: Configure and Deploy EC2 Instances with Terraform
+  hosts: localhost
+  gather_facts: yes
+  vars:
+    role_name: mcm-aws-role
+    instances:
+      - name: web-server-1
+        instance_type: t2.micro
+        subnet_id: subnet-0bb1c79de3EXAMPLE
+        account_id: "123456789012"
+        ami_id: ami-12345678
+        region: us-east-1
+      - name: db-server-1
+        instance_type: t2.medium
+        subnet_id: subnet-0bb1c8888EXAMPLE
+        account_id: "123456786666"
+        ami_id: ami-87654321
+        region: us-east-2
+      - name: as-server-1
+        instance_type: t2.large
+        subnet_id: subnet-1231c8888EXAMPLE
+        account_id: "12345678677"
+        ami_id: ami-87654999
+        region: us-west-2
+
+  tasks:
+    - name: Render main.tf from template
+      template:
+        src: ./templates/main.j2
+        dest: ./terraform/main.tf
+
+    - name: Render providers.tf from template
+      template:
+        src: ./templates/providers.j2
+        dest: ./terraform/providers.tf

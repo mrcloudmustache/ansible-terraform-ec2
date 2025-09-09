@@ -1,0 +1,10 @@
+{% for i in instances %}
+resource "aws_instance" "{{ i.name }}" {
+    provider = aws.{{ i.name }}
+
+    ami = "{{ i.ami_id }}"
+    subnet_id = "{{ i.subnet_id }}"
+    instance_type = "{{ i.instance_type }}"
+}
+
+{% endfor %}
